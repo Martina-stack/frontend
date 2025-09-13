@@ -40,15 +40,15 @@ function LoginPage() {
 
     function validateField(field, value) {
         const newErrors = { ...errors };
-        if (field === "email" && !/^\S+@\S+\.\S+$/.test(value))
+        /*if (field === "email" && !/^\S+@\S+\.\S+$/.test(value))
             newErrors.email = "Please enter a valid email.";
-        else delete newErrors.email;
+        else delete newErrors.email;*/
         if (field === "password" && value.length < 6)
             newErrors.password = "Password must be at least 6 characters.";
         else delete newErrors.password;
-        if (field === "role" && !value)
+        /*if (field === "role" && !value)
             newErrors.role = "Please select a role.";
-        else delete newErrors.role;
+        else delete newErrors.role;*/
         setErrors(newErrors);
     }
 
@@ -66,10 +66,10 @@ function LoginPage() {
             console.log(res); // ✅ match backend
             localStorage.setItem("jwt_token", res.data.token);
 
-            // optional: also store role if backend returns it
+            /*// optional: also store role if backend returns it
             if (res.data.role) {
                 localStorage.setItem("role", res.data.role);
-            }
+            }*/
 
             navigate("/"); // redirect after login
             // const res = await api.login({ email, password, role });
@@ -140,7 +140,7 @@ function LoginPage() {
                 )}
 
                 <form onSubmit={handleLogin} className="space-y-4">
-                    <div>
+
                         <label
                             htmlFor="username"
                             className="block text-gray-700 font-medium"
@@ -155,29 +155,7 @@ function LoginPage() {
                             className="login-input"
                             required
                         />
-                        <label
-                            htmlFor="email"
-                            className="block text-gray-700 font-medium"
-                        >
-                            Email
-                        </label>
-                        <input
-                            id="email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                                validateField("email", e.target.value);
-                            }}
-                            className={
-                                "login-input" + (errors.email ? " error" : "")
-                            }
-                            required
-                        />
-                        {errors.email && (
-                            <div className="login-error">{errors.email}</div>
-                        )}
-                    </div>
+
 
                     <div className="relative">
                         <label
@@ -216,50 +194,18 @@ function LoginPage() {
                         )}
                     </div>
 
-                    <div>
-                        <label
-                            htmlFor="role"
-                            className="block text-gray-700 font-medium"
-                        >
-                            Role
-                        </label>
-                        <select
-                            id="role"
-                            value={role}
-                            onChange={(e) => {
-                                setRole(e.target.value);
-                                validateField("role", e.target.value);
-                            }}
-                            className={
-                                "login-input custom-select-arrow" +
-                                (errors.role ? " error" : "")
-                            }
-                            required
-                        >
-                            <option value="">Select your role</option>
-                            <option value="gram-sabha">
-                                Gram Sabha Member
-                            </option>
-                            <option value="community">Community User</option>
-                            <option value="sdlc">SDLC Official</option>
-                            <option value="dlc">DLC Official</option>
-                        </select>
-                        {errors.role && (
-                            <div className="login-error">{errors.role}</div>
-                        )}
-                    </div>
-
                     <button type="submit" className="login-button">
                         Login
                     </button>
                 </form>
 
                 <p className="text-center text-gray-500 mt-4">
+                    Don't have an account?
                     <Link
                         to="/signup"
                         style={{ color: "green", textDecoration: "underline" }}
                     >
-                        Don't have an account? Sign up
+                         Sign up
                     </Link>
                 </p>
             </div>
