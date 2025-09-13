@@ -9,6 +9,10 @@ export const login = (credentials) => {
   return api.post("/auth/login", credentials);
 };
 
+export const signUp=(credentials)=>{
+  return api.post("/auth/register",credentials);
+}
+
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("jwt_token");
   if (token) {
