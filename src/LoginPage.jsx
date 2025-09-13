@@ -60,37 +60,20 @@ function LoginPage() {
         try {
             console.log("Login");
             e.preventDefault();
-            // if (!username || !password) return;
 
             const res = await login({ username, password });
             console.log(res); // ✅ match backend
             localStorage.setItem("jwt_token", res.data.token);
+            localStorage.setItem("role", res.data.role);
+            console.log(
+                "Login sucess: " +
+                    localStorage.getItem("jwt_token") +
+                    localStorage.getItem("role")
+            );
+            window.location.reload();
 
-            /*// optional: also store role if backend returns it
-            if (res.data.role) {
-                localStorage.setItem("role", res.data.role);
-            }*/
+            navigate("/");
 
-            navigate("/"); // redirect after login
-            // const res = await api.login({ email, password, role });
-            // localStorage.setItem("jwt_token", res.data.token);
-
-            switch (role) {
-                case "gram-sabha":
-                    navigate("/dashboard/gram-sabha");
-                    break;
-                case "community":
-                    navigate("/dashboard/community");
-                    break;
-                case "sdlc":
-                    navigate("/dashboard/sdlc");
-                    break;
-                case "dlc":
-                    navigate("/dashboard/dlc");
-                    break;
-                default:
-                    navigate("/");
-            }
         } catch (err) {
             setLoginError("Invalid credentials or server error.");
         }
@@ -140,22 +123,20 @@ function LoginPage() {
                 )}
 
                 <form onSubmit={handleLogin} className="space-y-4">
-
-                        <label
-                            htmlFor="username"
-                            className="block text-gray-700 font-medium"
-                        >
-                            Username
-                        </label>
-                        <input
-                            id="username"
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            className="login-input"
-                            required
-                        />
-
+                    <label
+                        htmlFor="username"
+                        className="block text-gray-700 font-medium"
+                    >
+                        Username
+                    </label>
+                    <input
+                        id="username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="login-input"
+                        required
+                    />
 
                     <div className="relative">
                         <label
@@ -205,7 +186,7 @@ function LoginPage() {
                         to="/signup"
                         style={{ color: "green", textDecoration: "underline" }}
                     >
-                         Sign up
+                        Sign up
                     </Link>
                 </p>
             </div>
