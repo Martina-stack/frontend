@@ -1,9 +1,13 @@
 import axios from "axios";
 
 const api=axios.create({
-  bseURL:"",
+  baseURL:"http://localhost:8080",
 });
 
+
+export const login = (credentials) => {
+  return api.post("/auth/login", credentials);
+};
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("jwt_token");
